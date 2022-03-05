@@ -28,4 +28,4 @@ app.use(helmet());
 app.use(apiRoutes);
 
 
-app.listen(5000, '0.0.0.0');
+app.listen(5000);

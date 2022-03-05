@@ -14,11 +14,11 @@ const fileUpload = multer({
   dest: path.join(__dirname, "../", "images")
 });
 
-
 router.post('/api/signup/', signup.Signup);
-router.post('/api/login', login.Login);
+router.post('/api/login/', login.Login);
+router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens)
 
-router.get('/api/auth/is-user', jwt.VerifyToken, (req,res,next) => {res.status(200).send({message:"Is logged in"})});
+router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res,next) => {res.status(200).send({message:"Is logged in"})});
 
 router.post('/api/get-page-metadata/', metaData.GetMetaData);
 

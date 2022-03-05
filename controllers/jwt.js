@@ -1,3 +1,4 @@
+const DB = require('./database');
 const jwt = require('jsonwebtoken');
 const validateToken = require('validator').isJWT
 
@@ -15,13 +16,20 @@ exports.VerifyToken = async (req, res, next) => {
   const isJWTToken = await validateToken(req.cookies.jwt)
 
   if (isJWTToken) {
+    const blacklistedTokenCheck = await DB.CheckBlackListedToken(req.cookies.jwt);
+
+    if (blacklistedTokenCheck.length >= 1) {
+      return res.status(401).clearCookie('jwt').send({message: "Unauthorised. Please login or signup."})
+    } else {
+
     try {
-      const verifiedToken = jwt.verify(req.cookies.jwt, process.env.JWTSECRET)
+      const verifiedToken = jwt.verify(req.cookies.jwt, process.env.JWTSECRET);
       res.locals.decodedToken = verifiedToken
       next()
 
     } catch {
       return res.status(401).send({message: 'Unauthorised. Please login or signup.'})
+    }
     }
 
   } else {
@@ -40,4 +48,16 @@ exports.DecodeToken = async (req, res, next) => {
   }
 };
 
-
+exports.BlacklistTokens = async (req, res) => {
+  const isJWTToken = await validateToken(req.cookies.jwt);
+  if (isJWTToken){
+    try {
+    const blackListJWTToken = await DB.BlacklistJWTToken(req.cookies.jwt);
+    return res.clearCookie('jwt').status(200).send({})
+    } catch {
+      return res.status(500).send({message: 'Server Error'})
+    }
+  } else {
+    return res.status(422).send({message: "Invalid JWT Token"})
+  }
+}

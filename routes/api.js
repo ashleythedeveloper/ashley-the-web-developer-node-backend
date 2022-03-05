@@ -8,6 +8,7 @@ const S3 = require('../controllers/S3');
 const jwt = require('../controllers/jwt');
 const metaData = require('../controllers/metaData');
 const contact = require('../controllers/contact');
+const projects = require('../controllers/projects');
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.post('/api/signup/', signup.Signup);
 router.post('/api/login/', login.Login);
 router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens);
 router.post('/api/contact-message/', contact.SendContactMessage);
+router.get('/api/projects/', projects.GetProjects)
 
 router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res,next) => {res.status(200).send({message:"Is logged in"})});
 

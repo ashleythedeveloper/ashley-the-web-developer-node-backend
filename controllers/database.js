@@ -109,4 +109,15 @@ exports.SaveIPAddress = async (ip, email) => {
     return err
   })
   return query
+};
+
+exports.GetAllProjects = async () => {
+  const query = await pool.query('SELECT * FROM project_data')
+  .then((res) => {
+    return res.rows
+  })
+  .catch((err) => {
+    return err
+  })
+  return query
 }

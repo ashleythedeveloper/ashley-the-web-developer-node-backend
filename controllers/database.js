@@ -75,7 +75,7 @@ exports.getMetaData = async (location) => {
 exports.BlacklistJWTToken = async (JWTToken) => {
   const date = new Date();
   const timestamp = date.toISOString();
-  const query = await pool.query('INSERT INTO jwt_token_blacklist (token, created_at) VALUES ($1, $2)', [JWTToken, timestamp])
+  const query = await pool.query('INSERT INTO jwt_token_blacklist (token, created_at) VALUES ($1, $2);', [JWTToken, timestamp])
   .then((res) => {
     return res
   })
@@ -86,7 +86,7 @@ exports.BlacklistJWTToken = async (JWTToken) => {
 };
 
 exports.CheckBlackListedToken = async (token) => {
-  const query = await pool.query('SELECT * FROM jwt_token_blacklist WHERE token=$1', [token])
+  const query = await pool.query('SELECT * FROM jwt_token_blacklist WHERE token=$1;', [token])
   .then((res) => {
     return res.rows
   })
@@ -94,5 +94,19 @@ exports.CheckBlackListedToken = async (token) => {
     return err
   })
 
+  return query
+}
+
+exports.SaveIPAddress = async (ip, email) => {
+  const date = new Date();
+  const timestamp = date.toISOString();
+
+  const query = await pool.query('INSERT INTO ip_addresses (ip_address, time, email) VALUES ($1, $2, $3);', [ip, timestamp, email])
+  .then((res) => {
+    return res
+  })
+  .catch((err) => {
+    return err
+  })
   return query
 }

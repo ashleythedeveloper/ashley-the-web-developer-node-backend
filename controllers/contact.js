@@ -1,4 +1,5 @@
 const NodeMailer = require('nodemailer');
+const DB = require('./database');
 
 
 // Send emails
@@ -25,6 +26,9 @@ const SendMail = exports.SendMail = async (mailObject) => {
 
 exports.SendContactMessage = async (req, res) => {
 
+  // Store ip to limit future spam
+  await DB.SaveIPAddress(req.socket.remoteAddress, req.body.email);
+
   // Send the contact email
   const sendContactEmail = await SendMail({
     from: 'ashley@ashleythewebdeveloper.com.au',
@@ -34,7 +38,6 @@ exports.SendContactMessage = async (req, res) => {
             <p>Email: ${req.body.email}</p>
             <p>Message: ${req.body.message}</p>`
   })
-  console.log(sendContactEmail)
   if (sendContactEmail) {
     return res.status(200).send({
       errorType: '',
@@ -52,4 +55,4 @@ exports.SendContactMessage = async (req, res) => {
       notificationMessage: 'Your message failed to send. Please try again.'
     })
   }
-}
+};

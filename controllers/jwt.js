@@ -53,7 +53,7 @@ exports.BlacklistTokens = async (req, res) => {
   if (isJWTToken){
     try {
     const blackListJWTToken = await DB.BlacklistJWTToken(req.cookies.jwt);
-    return res.clearCookie('jwt').status(200).send({})
+    return res.cookie('is-logged-in', false).clearCookie('jwt').status(200).send({})
     } catch {
       return res.status(500).send({message: 'Server Error'})
     }

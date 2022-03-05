@@ -7,6 +7,7 @@ const login = require('../controllers/login');
 const S3 = require('../controllers/S3');
 const jwt = require('../controllers/jwt');
 const metaData = require('../controllers/metaData');
+const contact = require('../controllers/contact');
 
 const router = express.Router();
 
@@ -16,7 +17,8 @@ const fileUpload = multer({
 
 router.post('/api/signup/', signup.Signup);
 router.post('/api/login/', login.Login);
-router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens)
+router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens);
+router.post('/api/contact-message/', contact.SendContactMessage);
 
 router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res,next) => {res.status(200).send({message:"Is logged in"})});
 

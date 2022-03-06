@@ -76,23 +76,23 @@ exports.BlacklistJWTToken = async (JWTToken) => {
   const date = new Date();
   const timestamp = date.toISOString();
   const query = await pool.query('INSERT INTO jwt_token_blacklist (token, created_at) VALUES ($1, $2);', [JWTToken, timestamp])
-  .then((res) => {
-    return res
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 };
 
 exports.CheckBlackListedToken = async (token) => {
   const query = await pool.query('SELECT * FROM jwt_token_blacklist WHERE token=$1;', [token])
-  .then((res) => {
-    return res.rows
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res.rows
+    })
+    .catch((err) => {
+      return err
+    })
 
   return query
 }
@@ -102,56 +102,56 @@ exports.SaveIPAddress = async (ip, email) => {
   const timestamp = date.toISOString();
 
   const query = await pool.query('INSERT INTO ip_addresses (ip_address, time, email) VALUES ($1, $2, $3);', [ip, timestamp, email])
-  .then((res) => {
-    return res
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 };
 
 exports.GetAllProjects = async () => {
   const query = await pool.query('SELECT * FROM project_data;')
-  .then((res) => {
-    return res.rows
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res.rows
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 };
 
 exports.GetProject = async (slug) => {
   const query = await pool.query('SELECT * FROM project_data WHERE slug=$1;', [slug])
-  .then((res) => {
-    return res.rows[0]
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res.rows[0]
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 };
 
 exports.GetProjectImages = async (projectId) => {
   const query = await pool.query('SELECT * FROM project_images WHERE project=$1;', [projectId])
-  .then((res) => {
-    console.log(res.rows)
-    return res.rows
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      console.log(res.rows)
+      return res.rows
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 };
 
 exports.GetProjectTechStack = async (projectId) => {
   const query = await pool.query('SELECT technologies.id, technologies.tech_name FROM technologies INNER JOIN project_tech ON project_tech.tech=technologies.id WHERE project_tech.project=$1;', [projectId])
-  .then((res) => {
-    return res.rows
-  })
-  .catch((err) => {
-    return err
-  })
+    .then((res) => {
+      return res.rows
+    })
+    .catch((err) => {
+      return err
+    })
   return query
 }

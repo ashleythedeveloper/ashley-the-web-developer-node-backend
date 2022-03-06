@@ -65,10 +65,10 @@ exports.Signup = async (req, res) => {
     } else {
       return res.status(500).send({
         errorType: "Server Error",
-          errorField: saveUser.errorField,
-          notificationType: saveUser.messageType,
-          notificationTitle: saveUser.messageTitle,
-          notificationMessage: saveUser.message
+        errorField: saveUser.errorField,
+        notificationType: saveUser.messageType,
+        notificationTitle: saveUser.messageTitle,
+        notificationMessage: saveUser.message
       })
     }
   } catch {

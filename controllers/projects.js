@@ -2,12 +2,12 @@ const DB = require('./database');
 
 exports.GetProjects = async (req, res) => {
   const projects = await DB.GetAllProjects()
-  .then((data) => {
-    return res.status(200).send(data);
-  })
-  .catch((err) => {
-    res.status(500).send()
-  })
+    .then((data) => {
+      return res.status(200).send(data);
+    })
+    .catch((err) => {
+      res.status(500).send()
+    })
 };
 
 
@@ -23,7 +23,7 @@ exports.GetProject = async (req, res) => {
     console.log(projectImages)
     console.log(projectTechStack)
 
-    return res.status(200).send({project: project, projectImages: projectImages, projectTechStack: projectTechStack})
+    return res.status(200).send({ project: project, projectImages: projectImages, projectTechStack: projectTechStack })
   }
 }
 

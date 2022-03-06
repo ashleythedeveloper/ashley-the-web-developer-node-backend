@@ -59,7 +59,4 @@ exports.Login = async (req, res, next) => {
       message: "Invalid email address. Please enter a valid email address"
     })
   }
-
-
-
 };

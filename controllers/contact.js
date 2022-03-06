@@ -11,15 +11,15 @@ const SendMail = exports.SendMail = async (mailObject) => {
       pass: process.env.MAILPASSWORD
     }
   });
-  
+
   const sendTheMail = transporter.sendMail(mailObject)
-  .then((res) => {
-    return true;
-  })
-  .catch((err) => {
-    return false;
-  })
-  
+    .then((res) => {
+      return true;
+    })
+    .catch((err) => {
+      return false;
+    })
+
   return sendTheMail
 };
 

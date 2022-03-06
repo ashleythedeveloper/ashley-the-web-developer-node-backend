@@ -16,8 +16,7 @@ app.use(express.static(path.join(__dirname, "images")));
 
 const corsConfig = {
   credentials: true,
-  origin: true,
-  exposedHeaders: ["Set-Cookie"]
+  origin: true
 };
 
 app.use(cors(corsConfig));

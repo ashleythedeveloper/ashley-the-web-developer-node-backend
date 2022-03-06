@@ -53,7 +53,7 @@ exports.BlacklistTokens = async (req, res) => {
   if (isJWTToken) {
     try {
       const blackListJWTToken = await DB.BlacklistJWTToken(req.cookies.jwt);
-      res.cookie('is-logged-in', false, {domain: '.ashleythewebdeveloper.com.au', sameSite: 'none', secure: 'true', maxAge: 1000})
+      res.cookie('is-logged-in', false, {domain: '.ashleythewebdeveloper.com.au', sameSite: 'none', secure: 'true'})
       res.clearCookie('jwt', {domain: '.ashleythewebdeveloper.com.au', sameSite: 'none', secure: 'true'})
       return res.status(200).send({})
     } catch {

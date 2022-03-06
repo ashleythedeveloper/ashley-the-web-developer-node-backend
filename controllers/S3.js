@@ -7,14 +7,14 @@ const bucketName = process.env.AWS_BUCKET_NAME
 
 // Produce a URL for given object
 exports.GetObjectUrl = async (imageName) => {
-  const url = await s3.getSignedUrl('getObject', {Bucket: bucketName, Key: `product-images/${imageName}`})
+  const url = await s3.getSignedUrl('getObject', {Bucket: bucketName, Key: `images/${imageName}`})
   return url
 };
 
 
 // Create an image object
 exports.CreateObject = (name, file, fileType) => {
-  s3.upload({Bucket: bucketName, Key: `product-images/${name}${fileType}`, Body: file}, (err, data) => {
+  s3.upload({Bucket: bucketName, Key: `images/${name}${fileType}`, Body: file}, (err, data) => {
     if (!err) {
       console.log(data)
     } else {
@@ -29,7 +29,7 @@ exports.CreateObject = (name, file, fileType) => {
 
 exports.DeleteObject = async (fileName) => {
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Removing Image!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    await s3.deleteObject({Bucket: bucketName, Key: `product-images/${fileName}`}, (err, res) => {
+    await s3.deleteObject({Bucket: bucketName, Key: `images/${fileName}`}, (err, res) => {
         if (!err){
             console.log("No Error")
             console.log(res);

@@ -112,7 +112,41 @@ exports.SaveIPAddress = async (ip, email) => {
 };
 
 exports.GetAllProjects = async () => {
-  const query = await pool.query('SELECT * FROM project_data')
+  const query = await pool.query('SELECT * FROM project_data;')
+  .then((res) => {
+    return res.rows
+  })
+  .catch((err) => {
+    return err
+  })
+  return query
+};
+
+exports.GetProject = async (slug) => {
+  const query = await pool.query('SELECT * FROM project_data WHERE slug=$1;', [slug])
+  .then((res) => {
+    return res.rows[0]
+  })
+  .catch((err) => {
+    return err
+  })
+  return query
+};
+
+exports.GetProjectImages = async (projectId) => {
+  const query = await pool.query('SELECT * FROM project_images WHERE project=$1;', [projectId])
+  .then((res) => {
+    console.log(res.rows)
+    return res.rows
+  })
+  .catch((err) => {
+    return err
+  })
+  return query
+};
+
+exports.GetProjectTechStack = async (projectId) => {
+  const query = await pool.query('SELECT technologies.id, technologies.tech_name FROM technologies INNER JOIN project_tech ON project_tech.tech=technologies.id WHERE project_tech.project=$1;', [projectId])
   .then((res) => {
     return res.rows
   })

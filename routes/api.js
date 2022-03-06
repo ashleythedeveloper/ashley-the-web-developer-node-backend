@@ -20,7 +20,8 @@ router.post('/api/signup/', signup.Signup);
 router.post('/api/login/', login.Login);
 router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens);
 router.post('/api/contact-message/', contact.SendContactMessage);
-router.get('/api/projects/', projects.GetProjects)
+router.get('/api/projects/', projects.GetProjects);
+router.post('/api/project/', projects.GetProject);
 
 router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res,next) => {res.status(200).send({message:"Is logged in"})});
 

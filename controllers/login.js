@@ -25,8 +25,8 @@ exports.Login = async (req, res, next) => {
           const decryptedPassword = await bcrypt.compare(password, userObject.password)
           if (decryptedPassword) {
             const jwtObject = await JWT.CreateToken(userObject.id)
-            res.cookie('jwt', jwtObject.token, { httpOnly: true, maxAge: jwtObject.expriry * 1000 });
-            res.cookie('is-logged-in', true, { maxAge: jwtObject.expriry * 1000 })
+            res.cookie('jwt', jwtObject.token, { httpOnly: true, maxAge: jwtObject.expriry * 1000 , domain: 'https://ashleythewebdeveloper.com.au'});
+            res.cookie('is-logged-in', true, { maxAge: jwtObject.expriry * 1000, domain: 'https://ashleythewebdeveloper.com.au' })
             res.status(200).send({
               status: "User Logged In",
               errorField: "",

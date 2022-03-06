@@ -4,7 +4,6 @@ const path = require('path');
 
 const signup = require('../controllers/signup');
 const login = require('../controllers/login');
-const S3 = require('../controllers/S3');
 const jwt = require('../controllers/jwt');
 const metaData = require('../controllers/metaData');
 const contact = require('../controllers/contact');
@@ -12,9 +11,9 @@ const projects = require('../controllers/projects');
 
 const router = express.Router();
 
-const fileUpload = multer({
-  dest: path.join(__dirname, "../", "images")
-});
+// const fileUpload = multer({
+//   dest: path.join(__dirname, "../", "images")
+// });
 
 router.post('/api/signup/', signup.Signup);
 router.post('/api/login/', login.Login);

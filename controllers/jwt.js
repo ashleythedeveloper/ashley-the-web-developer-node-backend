@@ -53,7 +53,9 @@ exports.BlacklistTokens = async (req, res) => {
   if (isJWTToken) {
     try {
       const blackListJWTToken = await DB.BlacklistJWTToken(req.cookies.jwt);
-      return res.cookie('is-logged-in', false, {sameSite: 'none', secure: 'true', maxAge: 1000}).clearCookie('jwt').status(200).send({})
+      res.cookie('is-logged-in', false, {domain: '.ashleythewebdeveloper.com.au', sameSite: 'none', secure: 'true', maxAge: 1000})
+      res.clearCookie('jwt')
+      return res.status(200).send({})
     } catch {
       return res.status(500).send({ message: 'Server Error' })
     }

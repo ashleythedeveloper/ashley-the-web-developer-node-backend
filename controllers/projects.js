@@ -19,11 +19,88 @@ exports.GetProject = async (req, res) => {
     const projectImages = await DB.GetProjectImages(project.id);
     const projectTechStack = await DB.GetProjectTechStack(project.id);
 
-    console.log(project)
-    console.log(projectImages)
-    console.log(projectTechStack)
-
     return res.status(200).send({ project: project, projectImages: projectImages, projectTechStack: projectTechStack })
   }
+};
+
+exports.UpdateProject = async (req, res) => {
+  const usersToken = res.locals.decodedToken;
+  const projectData = [req.body.project, req.body.modifiedProject];
+  const projectImages = [req.body.projectImages, req.body.modifiedProjectImages];
+  const projectTechStack = [req.body.projectTechStack, req.body.modifiedProjectTechStack];
+
+  const checkIfModified = async (originalData, modifiedData) => {
+    if (JSON.stringify(originalData).localeCompare(JSON.stringify(modifiedData)) === 0) {
+      return false
+    } 
+    return true
+  };
+
+  const handleModifiedProjectData = async (modifiedData) => {
+    const saveModifiedProjectData = await DB.UpdateProjectData(modifiedData);
+  };
+
+  const handleModifiedProjectImages = async (originalImageList, modifiedImageList) => {
+    const imagesToRemove = []
+      for (let modifiedImageNumber = 0; modifiedImageList.length < modifiedImageNumber; modifiedImageNumber++) {
+        for (let imageNumber = 0; originalImageList.length < imageNumber; imageNumber++) {
+          if (originalImageList[imageNumber].image_url !== modifiedImageList[modifiedImageNumber].image_url) {
+            imagesToRemove.push(originalImageList.imageNumber);
+          }
+      }
+    }
+    console.log(imagesToRemove)
+  };
+
+  const handleModifiedProjectTechStack = async (originalTechStackList, modifiedTechStackList) => {
+    const techToRemove = []
+    if (modifiedTechStackList.length === 0) {
+      console.log('Everything was deleted')
+      originalTechStackList.map((tech) => {
+        techToRemove.push(tech);
+      })
+    } else {
+      console.log('Adding things to be removed')
+      for (let modifiedTechNumber = 0; modifiedTechStackList.length < modifiedTechNumber; modifiedTechNumber++) {
+        for (let techNumber = 0; originalTechStackList.length < techNumber; techNumber++) {
+          console.log("POP")
+          if (originalTechStackList[techNumber].id !== modifiedTechStackList[modifiedTechNumber].id) {
+            console.log("POP")
+            techToRemove.push(originalTechStackList.techNumber);
+          }
+      }
+    }}
+    console.log(techToRemove)
+    techToRemove.map(async (tech) => {
+      console.log(tech)
+      await DB.RemoveTechFromProject(tech);
+    })
+    return
+  };
+
+
+  const checkProjectData = async () => {
+    if (await checkIfModified(projectData[0], projectData[1])) {
+      await handleModifiedProjectData(projectData[1])
+      return "Data Modified and Saved"
+    }
+    return "No data modified"
+  };
+
+  const checkTechStackData = async () => {
+    if (await checkIfModified(projectTechStack[0], projectTechStack[1])) {
+      await handleModifiedProjectTechStack(projectTechStack[0], projectTechStack[1]);
+      return "Data Modified and Saved"
+    }
+    return "No data modified"
+  }
+
+
+
+  let p = await checkTechStackData();
+
+
+  res.status(200).send(p)
 }
+
 

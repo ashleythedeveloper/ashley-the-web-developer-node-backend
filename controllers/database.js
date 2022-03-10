@@ -136,7 +136,6 @@ exports.GetProject = async (slug) => {
 exports.GetProjectImages = async (projectId) => {
   const query = await pool.query('SELECT * FROM project_images WHERE project=$1;', [projectId])
     .then((res) => {
-      console.log(res.rows)
       return res.rows
     })
     .catch((err) => {
@@ -146,13 +145,13 @@ exports.GetProjectImages = async (projectId) => {
 };
 
 exports.GetProjectTechStack = async (projectId) => {
-  const query = await pool.query('SELECT technologies.id, technologies.tech_name FROM technologies INNER JOIN project_tech ON project_tech.tech=technologies.id WHERE project_tech.project=$1;', [projectId])
+  const query = await pool.query('SELECT project_tech.id, technologies.tech_name FROM technologies INNER JOIN project_tech ON project_tech.tech=technologies.id WHERE project_tech.project=$1;', [projectId])
     .then((res) => {
       return res.rows
     })
     .catch((err) => {
       return err
-    })
+    }) 
   return query
 };
 

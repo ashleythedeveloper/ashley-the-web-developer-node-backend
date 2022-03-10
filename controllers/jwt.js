@@ -19,15 +19,19 @@ exports.VerifyToken = async (req, res, next) => {
     const blacklistedTokenCheck = await DB.CheckBlackListedToken(req.cookies.jwt);
 
     if (blacklistedTokenCheck.length >= 1) {
+
       return res.status(401).clearCookie('jwt').send({ message: "Unauthorised. Please login or signup." })
     } else {
 
       try {
         const verifiedToken = jwt.verify(req.cookies.jwt, process.env.JWTSECRET);
+        console.log(verifiedToken)
         res.locals.decodedToken = verifiedToken
         next()
 
       } catch {
+        console.log('fire')
+
         return res.status(401).send({ message: 'Unauthorised. Please login or signup.' })
       }
     }

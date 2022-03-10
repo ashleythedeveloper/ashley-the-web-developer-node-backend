@@ -32,7 +32,7 @@ exports.UpdateProject = async (req, res) => {
   const checkIfModified = async (originalData, modifiedData) => {
     if (JSON.stringify(originalData).localeCompare(JSON.stringify(modifiedData)) === 0) {
       return false
-    } 
+    }
     return true
   };
 
@@ -42,11 +42,11 @@ exports.UpdateProject = async (req, res) => {
 
   const handleModifiedProjectImages = async (originalImageList, modifiedImageList) => {
     const imagesToRemove = []
-      for (let modifiedImageNumber = 0; modifiedImageList.length < modifiedImageNumber; modifiedImageNumber++) {
-        for (let imageNumber = 0; originalImageList.length < imageNumber; imageNumber++) {
-          if (originalImageList[imageNumber].image_url !== modifiedImageList[modifiedImageNumber].image_url) {
-            imagesToRemove.push(originalImageList.imageNumber);
-          }
+    for (let modifiedImageNumber = 0; modifiedImageList.length < modifiedImageNumber; modifiedImageNumber++) {
+      for (let imageNumber = 0; originalImageList.length < imageNumber; imageNumber++) {
+        if (originalImageList[imageNumber].image_url !== modifiedImageList[modifiedImageNumber].image_url) {
+          imagesToRemove.push(originalImageList.imageNumber);
+        }
       }
     }
     console.log(imagesToRemove)
@@ -55,24 +55,20 @@ exports.UpdateProject = async (req, res) => {
   const handleModifiedProjectTechStack = async (originalTechStackList, modifiedTechStackList) => {
     const techToRemove = []
     if (modifiedTechStackList.length === 0) {
-      console.log('Everything was deleted')
       originalTechStackList.map((tech) => {
         techToRemove.push(tech);
       })
     } else {
-      console.log('Adding things to be removed')
-      for (let modifiedTechNumber = 0; modifiedTechStackList.length < modifiedTechNumber; modifiedTechNumber++) {
-        for (let techNumber = 0; originalTechStackList.length < techNumber; techNumber++) {
-          console.log("POP")
+      for (let modifiedTechNumber = 0; modifiedTechNumber < modifiedTechStackList.length; modifiedTechNumber++) {
+        for (let techNumber = 0; techNumber < originalTechStackList.length; techNumber++) {
           if (originalTechStackList[techNumber].id !== modifiedTechStackList[modifiedTechNumber].id) {
-            console.log("POP")
-            techToRemove.push(originalTechStackList.techNumber);
+            techToRemove.push(originalTechStackList[techNumber]);
           }
+        }
       }
-    }}
+    }
     console.log(techToRemove)
     techToRemove.map(async (tech) => {
-      console.log(tech)
       await DB.RemoveTechFromProject(tech);
     })
     return
@@ -98,9 +94,10 @@ exports.UpdateProject = async (req, res) => {
 
 
   let p = await checkTechStackData();
+  let q = await checkProjectData()
 
 
-  res.status(200).send(p)
+  res.status(200).send(q)
 }
 
 

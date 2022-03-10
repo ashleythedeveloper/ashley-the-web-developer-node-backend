@@ -15,6 +15,7 @@ router.post('/api/auth/blacklist-token/', jwt.BlacklistTokens);
 router.post('/api/contact-message/', contact.SendContactMessage);
 router.get('/api/projects/', projects.GetProjects);
 router.post('/api/project/', projects.GetProject);
+router.post('/api/update-project/', projects.UpdateProject);
 
 router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res) => {res.status(200).send({message:"Is logged in"})});
 

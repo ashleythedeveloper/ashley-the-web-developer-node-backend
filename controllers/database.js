@@ -154,4 +154,14 @@ exports.GetProjectTechStack = async (projectId) => {
       return err
     })
   return query
-}
+};
+
+exports.UpdateProjectData = async (modifiedProjectData) => {
+  const query = await pool.query('UPDATE project_data SET content = $1, core_tech = $2, date_published = $3, description = $4, main_project_image = $5, meta_description = $6, meta_title = $7, project_link = $8, project_repo= $9, project_title = $10, published = $11, slug = $12 WHERE id=$13;', [modifiedProjectData.content, modifiedProjectData.core_tech, modifiedProjectData.date_published, modifiedProjectData.description, modifiedProjectData.main_project_image, modifiedProjectData.meta_description, modifiedProjectData.meta_title, modifiedProjectData.project_link, modifiedProjectData.project_repo, modifiedProjectData.project_title, modifiedProjectData.published, modifiedProjectData.slug, modifiedProjectData.id])
+  return query
+};
+
+exports.RemoveTechFromProject = async (techObjectToRemove) => {
+  const query = await pool.query('DELETE FROM project_tech WHERE id=$1', [techObjectToRemove.id])
+  return query
+} 

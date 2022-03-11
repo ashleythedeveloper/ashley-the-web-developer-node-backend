@@ -29,6 +29,7 @@ exports.UpdateProject = async (req, res) => {
   const projectImages = [req.body.projectImages, req.body.modifiedProjectImages];
   const projectTechStack = [req.body.projectTechStack, req.body.modifiedProjectTechStack];
 
+
   const checkIfModified = async (originalData, modifiedData) => {
     if (JSON.stringify(originalData).localeCompare(JSON.stringify(modifiedData)) === 0) {
       return false
@@ -36,14 +37,16 @@ exports.UpdateProject = async (req, res) => {
     return true
   };
 
+
   const handleModifiedProjectData = async (modifiedData) => {
     const saveModifiedProjectData = await DB.UpdateProjectData(modifiedData);
   };
 
+
   const handleModifiedProjectImages = async (originalImageList, modifiedImageList) => {
     const imagesToRemove = []
-    for (let modifiedImageNumber = 0; modifiedImageList.length < modifiedImageNumber; modifiedImageNumber++) {
-      for (let imageNumber = 0; originalImageList.length < imageNumber; imageNumber++) {
+    for (let modifiedImageNumber = 0; modifiedImageNumber < modifiedImageList.length; modifiedImageNumber++) {
+      for (let imageNumber = 0; imageNumber < originalImageList.length; imageNumber++) {
         if (originalImageList[imageNumber].image_url !== modifiedImageList[modifiedImageNumber].image_url) {
           imagesToRemove.push(originalImageList.imageNumber);
         }
@@ -51,6 +54,7 @@ exports.UpdateProject = async (req, res) => {
     }
     console.log(imagesToRemove)
   };
+
 
   const handleModifiedProjectTechStack = async (originalTechStackList, modifiedTechStackList) => {
     const techToRemove = []
@@ -83,6 +87,7 @@ exports.UpdateProject = async (req, res) => {
     return "No data modified"
   };
 
+
   const checkTechStackData = async () => {
     if (await checkIfModified(projectTechStack[0], projectTechStack[1])) {
       await handleModifiedProjectTechStack(projectTechStack[0], projectTechStack[1]);
@@ -97,7 +102,7 @@ exports.UpdateProject = async (req, res) => {
   let q = await checkProjectData()
 
 
-  res.status(200).send(q)
+  res.status(200).send({p, q})
 }
 
 

@@ -25,12 +25,10 @@ exports.VerifyToken = async (req, res, next) => {
 
       try {
         const verifiedToken = jwt.verify(req.cookies.jwt, process.env.JWTSECRET);
-        console.log(verifiedToken)
         res.locals.decodedToken = verifiedToken
         next()
 
       } catch {
-        console.log('fire')
 
         return res.status(401).send({ message: 'Unauthorised. Please login or signup.' })
       }

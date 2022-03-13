@@ -16,6 +16,7 @@ router.post('/api/contact-message/', contact.SendContactMessage);
 router.get('/api/projects/', projects.GetProjects);
 router.post('/api/project/', projects.GetProject);
 router.post('/api/update-project/', jwt.VerifyToken, projects.UpdateProject);
+router.post('/api/users-project/', jwt.VerifyToken, projects.GetProject)
 
 router.get('/api/auth/is-user/', jwt.VerifyToken, (req,res) => {res.status(200).send({message:"Is logged in"})});
 

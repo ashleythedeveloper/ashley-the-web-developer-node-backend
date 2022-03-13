@@ -163,4 +163,9 @@ exports.UpdateProjectData = async (modifiedProjectData) => {
 exports.RemoveTechFromProject = async (techObjectToRemove) => {
   const query = await pool.query('DELETE FROM project_tech WHERE id=$1', [techObjectToRemove.id])
   return query
-} 
+};
+
+exports.CheckOwnershipOfProject = async (userId, projectId) => {
+  const query = await pool.query('SELECT * FROM projects WHERE "user"=$1 AND "project"=$2;', [userId, projectId])
+  return query;
+}

@@ -71,7 +71,6 @@ exports.UpdateProject = async (req, res) => {
         }
       }
     }
-    console.log(techToRemove)
     techToRemove.map(async (tech) => {
       await DB.RemoveTechFromProject(tech);
     })
@@ -96,13 +95,24 @@ exports.UpdateProject = async (req, res) => {
     return "No data modified"
   }
 
+  const checkOwnership = async (usersId, projectId) => {
+    const check = await DB.CheckOwnershipOfProject(usersId, projectId);
+    if (check.rows.length > 0) {
+      return true
+    } 
+    return false
+  }
 
-
+  const isOwner  = await checkOwnership(usersToken.userId, projectData[1].id);
+  if (!isOwner) {
+    res.status(401).send({message: "You are not the owner of this project!"})
+  } else {
   let p = await checkTechStackData();
   let q = await checkProjectData()
 
 
   res.status(200).send({p, q})
+  }
 }
 
 

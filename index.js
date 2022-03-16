@@ -27,5 +27,5 @@ app.use(cookieParser())
 app.use(helmet());
 app.use(apiRoutes);
 
+module.exports = app;
 
-app.listen(5000);

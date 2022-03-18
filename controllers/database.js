@@ -15,8 +15,11 @@ const pool = new Pool({
   }
 });
 
+exports.Pool = pool
+
+
 exports.SaveUser = async (userName, firstName, lastName, email, hashedPassword) => {
-  const query = await pool.query('INSERT INTO users (user_name, first_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5);', [userName, firstName, lastName, email, hashedPassword])
+  const query = await pool.query('INSERT INTO "users" ("user_name", "first_name", "last_name", "email", "password") VALUES ($1, $2, $3, $4, $5);', [userName, firstName, lastName, email, hashedPassword])
     .then(() => {
       return {
         status: "User Saved",
@@ -151,7 +154,7 @@ exports.GetProjectTechStack = async (projectId) => {
     })
     .catch((err) => {
       return err
-    }) 
+    })
   return query
 };
 
@@ -168,4 +171,5 @@ exports.RemoveTechFromProject = async (techObjectToRemove) => {
 exports.CheckOwnershipOfProject = async (userId, projectId) => {
   const query = await pool.query('SELECT * FROM projects WHERE "user"=$1 AND "project"=$2;', [userId, projectId])
   return query;
-}
+};
+

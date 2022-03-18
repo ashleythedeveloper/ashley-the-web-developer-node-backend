@@ -1,6 +1,6 @@
 const express = require('express');
 
-const signup = require('../controllers/signup');
+const signup = require('../controllers/signup/signup');
 const login = require('../controllers/login');
 const jwt = require('../controllers/jwt');
 const metaData = require('../controllers/metaData');

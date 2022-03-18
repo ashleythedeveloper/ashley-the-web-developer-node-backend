@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const apiRoutes = require('./routes/api');
+const errorMiddleware = require('./controllers/errorMiddleware').errorMiddleware;
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(helmet());
 app.use(apiRoutes);
+app.use(errorMiddleware);
 
+module.exports = app;
 
-app.listen(5000);
